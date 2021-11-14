@@ -18,6 +18,7 @@ jobs:
             artifact: "Windows-MSVC.tar.xz"
     steps:
       - name: Restore cache
+        id: restore-cache
         uses: actions/cache@v2.1.6
         with:
           path: |
@@ -34,7 +35,8 @@ jobs:
       - name: Print info
         shell: bash
         run: |
-          echo "Cache hit: ${{steps.store.outputs.cache-hit}}"
+          echo "Cache hit: ${{steps.restore-cache.outputs.cache-hit}}"
+          find '.' -type f | xargs -t grep -e.
       - name: Create some files
         shell: bash
         id: store
