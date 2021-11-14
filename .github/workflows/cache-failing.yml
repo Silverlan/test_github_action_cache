@@ -1,0 +1,70 @@
+name: Build Windows
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Failing Test - ${{ matrix.config.os }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - os: windows-latest
+            name: "Windows x64 MSVC"
+            artifact: "Windows-MSVC.tar.xz"
+    steps:
+      - name: Restore cache
+        id: restore-cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: |
+            third_party_libs/boost/**/*.dll
+            third_party_libs/boost/**/*.lib
+            third_party_libs/boost/**/*.so
+            third_party_libs/boost/**/*.a
+            third_party_libs/boost/**/*.h
+            third_party_libs/boost/**/*.hpp
+          key: test-cache-multi-files-v5-${{ hashFiles('third_party_libs/boost/**') }}
+          restore-keys: |
+            test-cache-multi-files-v5-${{ hashFiles('third_party_libs/boost/**') }}
+            test-cache-multi-files-v5-
+      - name: Print info
+        shell: bash
+        run: |
+          echo "Cache hit: ${{steps.restore-cache.outputs.cache-hit}}"
+          find '.' -type f | xargs -t grep -e.
+      - name: Download boost
+        shell: bash
+        run: |
+          mkdir -p third_party_libs/boost
+          cd third_party_libs/boost
+          curl -LJO https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.zip
+          7z x boost_1_76_0.zip -aos -y
+          cd ../../
+      - name: Create some files
+        shell: bash
+        id: store
+        run: |
+          mkdir -p 'third_party_libs/boost/stage/lib'
+          cd 'third_party_libs/boost/stage/lib'
+          echo pwd $(pwd)
+          printf '%s' "Lorem ipsum" >> a.dll
+          printf '%s' "dolor sit amet" >> b.lib
+          printf '%s' "consectetur adipiscing elit" >> c.so
+          cat a.dll b.lib
+      - name: Store everything in cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: |
+            third_party_libs/boost/**/*.dll
+            third_party_libs/boost/**/*.lib
+            third_party_libs/boost/**/*.so
+            third_party_libs/boost/**/*.a
+            third_party_libs/boost/**/*.h
+            third_party_libs/boost/**/*.hpp
+          key: test-cache-multi-files-v5-${{ hashFiles('third_party_libs/boost/**') }}
+    
