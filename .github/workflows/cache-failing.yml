@@ -1,4 +1,4 @@
-name: Build Windows
+name: Failing Test
 on:
   push:
     branches: [ main ]
