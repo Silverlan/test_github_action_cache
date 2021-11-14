@@ -36,7 +36,7 @@ jobs:
         shell: bash
         run: |
           echo "Cache hit: ${{steps.restore-cache.outputs.cache-hit}}"
-          find '.' -type f | xargs -t grep -e.
+          ls -R
       - name: Create some files
         shell: bash
         id: store
