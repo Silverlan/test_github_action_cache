@@ -1,13 +1,13 @@
 name: Build Windows
 on:
   push:
-    branches: [ master, actions ]
+    branches: [ main ]
   pull_request:
-    branches: [ master, actions ]
+    branches: [ main ]
 
 jobs:
   build:
-    name: Build - ${{ matrix.config.os }}
+    name: Test - ${{ matrix.config.os }}
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
