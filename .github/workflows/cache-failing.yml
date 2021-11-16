@@ -22,16 +22,17 @@ jobs:
         uses: actions/cache@v2.1.6
         with:
           path: |
-            third_party_libs/boost/**/*.dll
-            third_party_libs/boost/**/*.lib
-            third_party_libs/boost/**/*.so
-            third_party_libs/boost/**/*.a
-            third_party_libs/boost/**/*.h
-            third_party_libs/boost/**/*.hpp
-          key: test-cache-multi-files-v6-${{ hashFiles('third_party_libs/boost/**') }}
+            third_party_libs/boost/**/*
+          #  third_party_libs/boost/**/*.dll
+          #  third_party_libs/boost/**/*.lib
+          #  third_party_libs/boost/**/*.so
+          #  third_party_libs/boost/**/*.a
+          #  third_party_libs/boost/**/*.h
+          #  third_party_libs/boost/**/*.hpp
+          key: test-cache-multi-files-v7-${{ hashFiles('third_party_libs/boost/**') }}
           restore-keys: |
-            test-cache-multi-files-v6-${{ hashFiles('third_party_libs/boost/**') }}
-            test-cache-multi-files-v6-
+            test-cache-multi-files-v7-${{ hashFiles('third_party_libs/boost/**') }}
+            test-cache-multi-files-v7-
       - name: Print info
         shell: bash
         run: |
@@ -60,11 +61,12 @@ jobs:
         uses: actions/cache@v2.1.6
         with:
           path: |
-            third_party_libs/boost/**/*.dll
-            third_party_libs/boost/**/*.lib
-            third_party_libs/boost/**/*.so
-            third_party_libs/boost/**/*.a
-            third_party_libs/boost/**/*.h
-            third_party_libs/boost/**/*.hpp
-          key: test-cache-multi-files-v6-${{ hashFiles('third_party_libs/boost/**') }}
+            third_party_libs/boost/**/*
+          #  third_party_libs/boost/**/*.dll
+          #  third_party_libs/boost/**/*.lib
+          #  third_party_libs/boost/**/*.so
+          #  third_party_libs/boost/**/*.a
+          #  third_party_libs/boost/**/*.h
+          #  third_party_libs/boost/**/*.hpp
+          key: test-cache-multi-files-v7-${{ hashFiles('third_party_libs/boost/**') }}
     
